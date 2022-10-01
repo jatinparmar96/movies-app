@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { movieService } from '../../services/api';
 import { MovieCard } from '../cards/MovieCard';
 
-export const MovieScreen = (props) => {
+export const MovieScreen = ({ navigation }) => {
   const [category, setCategory] = useState('now_playing');
   const [movies, setMovies] = useState([]);
   useEffect(() => {
@@ -19,7 +19,7 @@ export const MovieScreen = (props) => {
       setMovies(response.data.results);
     })();
   }, [category]);
-  console.log(movies[0]);
+
   return (
     <ScrollView>
       <Center>
@@ -32,11 +32,11 @@ export const MovieScreen = (props) => {
           accessibilityLabel="Choose Service"
           placeholder="Choose Service"
           _selectedItem={{
-            bg: 'teal.600',
+            bg: 'teal.800',
             color: 'white',
             endIcon: <CheckIcon size="5" color="white" />,
           }}
-          mt={8}
+          my={8}
           onValueChange={(itemValue) =>
             setCategory(itemValue)
           }
@@ -61,7 +61,10 @@ export const MovieScreen = (props) => {
         <FlatList
           data={movies}
           renderItem={({ item }) => (
-            <MovieCard movie={item} />
+            <MovieCard
+              movie={item}
+              navigation={navigation}
+            />
           )}
         ></FlatList>
       </Box>

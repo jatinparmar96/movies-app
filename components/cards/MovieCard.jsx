@@ -8,7 +8,7 @@ import {
   VStack,
 } from 'native-base';
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, navigation }) => {
   return (
     <Box
       marginY={2}
@@ -32,7 +32,15 @@ export const MovieCard = ({ movie }) => {
           </Text>
           <Text>Popularity: {movie.popularity}</Text>
           <Text>Release Date: {movie.release_date}</Text>
-          <Button bg="teal.300" width="100%">
+          <Button
+            bg="teal.300"
+            width="100%"
+            onPress={() =>
+              navigation.navigate('Movie Details', {
+                movieId: movie.id,
+              })
+            }
+          >
             More Details
           </Button>
         </VStack>
