@@ -1,9 +1,13 @@
-import { Box, NativeBaseProvider } from 'native-base';
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeBaseProvider } from 'native-base';
+import { AppStack } from './components/stack/AppStack';
 
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Box>Hello World</Box>
+      <NavigationContainer>
+        <AppStack />
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }
