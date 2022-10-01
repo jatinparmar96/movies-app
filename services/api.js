@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { apiKey, baseUrl } from './config';
 
-const baseUrl = baseUrl;
-
-export const movie = (param) => {
-  return axios.get(
-    `${baseUrl}/movie/${param}?apiKey=${apiKey}`
-  );
+export const movieService = async (param) => {
+  const res = axios
+    .get(`${baseUrl}/movie/${param}?api_key=${apiKey}`)
+    .catch(console.log);
+  return res;
 };
