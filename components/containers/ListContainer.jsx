@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { tmdbService } from '../../services/api';
 import { MovieCard } from '../cards/MovieCard';
 import { TvCard } from '../cards/TvCard';
+import { Loading } from '../layout/Loading';
 export const ListContainer = ({
   type,
   navigation,
@@ -18,11 +19,13 @@ export const ListContainer = ({
     categories[0].value
   );
   const [list, setList] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const response = await tmdbService(type, category);
       setList(response.data.results);
+      setLoading(false);
     })();
   }, [category]);
 
@@ -60,24 +63,28 @@ export const ListContainer = ({
         </Select>
       </Center>
 
-      <FlatList
-        contentContainerStyle={{
-          paddingBottom: 10,
-        }}
-        data={list}
-        renderItem={({ item }) => (
-          <>
-            {type === 'movie' ? (
-              <MovieCard
-                movie={item}
-                navigation={navigation}
-              />
-            ) : (
-              <TvCard tv={item} navigation={navigation} />
-            )}
-          </>
-        )}
-      ></FlatList>
+      {loading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          contentContainerStyle={{
+            paddingBottom: 10,
+          }}
+          data={list}
+          renderItem={({ item }) => (
+            <>
+              {type === 'movie' ? (
+                <MovieCard
+                  movie={item}
+                  navigation={navigation}
+                />
+              ) : (
+                <TvCard tv={item} navigation={navigation} />
+              )}
+            </>
+          )}
+        ></FlatList>
+      )}
     </VStack>
   );
 };

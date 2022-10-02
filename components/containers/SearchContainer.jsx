@@ -22,7 +22,6 @@ export const SearchContainer = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState();
   const [searchType, setSearchType] = useState('multi');
   const [items, setItems] = useState([]);
-
   const search = async () => {
     if (searchTerm) {
       const response = await tmdbService(
@@ -114,6 +113,7 @@ export const SearchContainer = ({ navigation }) => {
           </Center>
         ) : (
           <FlatList
+            mt={4}
             data={items}
             renderItem={({ item }) => {
               if (

@@ -1,4 +1,3 @@
-import { Text } from 'native-base';
 import {
   useEffect,
   useLayoutEffect,
@@ -7,6 +6,7 @@ import {
 import { tmdbService } from '../../services/api';
 import { MovieContainer } from '../containers/MovieContainer';
 import { TvContainer } from '../containers/TvContainer';
+import { Loading } from '../layout/Loading';
 
 export const MovieDetailScreen = ({
   route,
@@ -31,7 +31,7 @@ export const MovieDetailScreen = ({
   return (
     <>
       {!item ? (
-        <Text>Loading..</Text>
+        <Loading />
       ) : (
         <>
           {itemType === 'movie' ? (
