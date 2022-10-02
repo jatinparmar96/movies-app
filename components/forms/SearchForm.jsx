@@ -10,9 +10,9 @@ import {
   Select,
   Stack,
 } from 'native-base';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const SearchForm = ({ onSubmit }) => {
+export const SearchForm = ({ onSubmit, page }) => {
   const [searchTerm, setSearchTerm] = useState();
   const [searchType, setSearchType] = useState('multi');
   const [showError, setShowError] = useState(false);
@@ -25,6 +25,12 @@ export const SearchForm = ({ onSubmit }) => {
       setShowError(true);
     }
   };
+  useEffect(() => {
+    console.log(page);
+    if (page !== 1) {
+      submit();
+    }
+  }, [page]);
   return (
     <>
       <FormControl isRequired isInvalid={showError}>
