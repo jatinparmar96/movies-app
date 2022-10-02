@@ -6,12 +6,10 @@ export const tmdbService = async (
   param,
   queryParams = ''
 ) => {
-  const url = `${baseUrl}/${queryType}${
-    param ? '/' + param : ''
-  }?api_key=${apiKey}${
+  const url = `${baseUrl}/${queryType}/${param}?api_key=${apiKey}${
     queryParams ? '&query=' + queryParams : ''
   }`;
   console.log(url);
-  const res = axios.get(url).catch(console.log);
+  const res = await axios.get(url).catch(console.log);
   return res;
 };

@@ -31,6 +31,7 @@ export const SearchContainer = ({ navigation }) => {
         encodeURI(searchTerm)
       );
       setItems(response.data.results);
+      setSearchTerm('');
     }
   };
   return (
@@ -77,7 +78,10 @@ export const SearchContainer = ({ navigation }) => {
               },
               endIcon: <CheckIcon size="5" color="white" />,
             }}
-            onValueChange={(text) => setSearchType(text)}
+            onValueChange={(text) => {
+              setSearchType(text);
+              setSearchTerm('');
+            }}
             selectedValue={searchType}
           >
             <Select.Item label="multi" value="multi" />
@@ -112,21 +116,24 @@ export const SearchContainer = ({ navigation }) => {
           <FlatList
             data={items}
             renderItem={({ item }) => {
-              return (
-                <>
-                  {item.media_type === 'movie' ? (
-                    <MovieCard
-                      movie={item}
-                      navigation={navigation}
-                    />
-                  ) : (
-                    <TvCard
-                      tv={item}
-                      navigation={navigation}
-                    />
-                  )}
-                </>
-              );
+              if (
+                item.media_type === 'movie' ||
+                searchType === 'movie'
+              ) {
+                return (
+                  <MovieCard
+                    movie={item}
+                    navigation={navigation}
+                  />
+                );
+              } else {
+                return (
+                  <TvCard
+                    tv={item}
+                    navigation={navigation}
+                  />
+                );
+              }
             }}
           />
         )}

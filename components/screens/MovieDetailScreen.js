@@ -1,57 +1,45 @@
+import { Text } from 'native-base';
 import {
-  AspectRatio,
-  Box,
-  Center,
-  HStack,
-  Image,
-  Text,
-} from 'native-base';
-import { useEffect, useState } from 'react';
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { tmdbService } from '../../services/api';
+import { MovieContainer } from '../containers/MovieContainer';
+import { TvContainer } from '../containers/TvContainer';
 
-export const MovieDetailScreen = ({ route }) => {
-  const { movieId } = route.params;
-  const [movie, setMovie] = useState();
+export const MovieDetailScreen = ({
+  route,
+  navigation,
+}) => {
+  const { itemId, itemType, itemName } = route.params;
+  const [item, setItem] = useState();
   useEffect(() => {
     (async () => {
-      const response = await tmdbService('movie', movieId);
-      setMovie(response.data);
+      const response = await tmdbService(itemType, itemId);
+      setItem(response.data);
     })();
-  }, [movieId]);
+  }, [itemId]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: itemName,
+      headerBackTitle: 'Back to List',
+    });
+  }, [navigation]);
 
   return (
     <>
-      {!movie ? (
+      {!item ? (
         <Text>Loading..</Text>
       ) : (
-        <Box flex={1} paddingX={10}>
-          <Center mt={8}>
-            <Text fontSize={24} fontWeight="bold">
-              {movie.original_title}
-            </Text>
-            <AspectRatio w="80%" mt={3} ratio={1}>
-              <Image
-                resizeMode="cover"
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-                }}
-                alt={`${movie.original_title} poster`}
-              />
-            </AspectRatio>
-          </Center>
-          <Text
-            mt={3}
-            color="gray.800"
-            alignContent="center"
-          >
-            {movie.overview}
-          </Text>
-          <HStack mt={6}>
-            <Text>Popularity: {movie.popularity}</Text>
-            <Text mx={1}>|</Text>
-            <Text>Release Date: {movie.release_date}</Text>
-          </HStack>
-        </Box>
+        <>
+          {itemType === 'movie' ? (
+            <MovieContainer movie={item} />
+          ) : (
+            <TvContainer tv={item} />
+          )}
+        </>
       )}
     </>
   );

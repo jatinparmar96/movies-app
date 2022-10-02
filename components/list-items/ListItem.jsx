@@ -14,7 +14,7 @@ export const ListItem = ({
   title,
   popularity,
   releaseDate,
-  navigation,
+  onDetailPress,
 }) => {
   return (
     <Box
@@ -40,11 +40,7 @@ export const ListItem = ({
           <Button
             bg="teal.300"
             width="100%"
-            onPress={() =>
-              navigation.navigate('Movie Details', {
-                movieId: id,
-              })
-            }
+            onPress={onDetailPress}
           >
             More Details
           </Button>

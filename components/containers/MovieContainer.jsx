@@ -1,5 +1,14 @@
-import { Text } from 'native-base';
+import { tmdbImageUrl } from '../../services/config';
+import { ItemPageContainer } from './ItemPageContainer';
 
-export default MovieContainer = (props) => {
-  return <Text>Movie Container</Text>;
+export const MovieContainer = ({ movie }) => {
+  return (
+    <ItemPageContainer
+      title={movie.original_title}
+      description={movie.overview}
+      popularity={movie.popularity}
+      releaseDate={movie.release_date}
+      photo={tmdbImageUrl + movie.poster_path}
+    />
+  );
 };
