@@ -7,17 +7,14 @@ import {
   Text,
 } from 'native-base';
 import { useEffect, useState } from 'react';
-import { movieService } from '../../services/api';
+import { tmdbService } from '../../services/api';
 
-export const MovieDetailScreen = ({
-  route,
-  navigation,
-}) => {
+export const MovieDetailScreen = ({ route }) => {
   const { movieId } = route.params;
   const [movie, setMovie] = useState();
   useEffect(() => {
     (async () => {
-      const response = await movieService(movieId);
+      const response = await tmdbService('movie', movieId);
       setMovie(response.data);
     })();
   }, [movieId]);

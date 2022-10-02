@@ -1,5 +1,5 @@
-import { Box } from 'native-base';
+import { SearchContainer } from '../containers/SearchContainer';
 
-export const SearchScreen = (props) => {
-  return <Box>Search Screen</Box>;
+export const SearchScreen = ({ navigation }) => {
+  return <SearchContainer navigation={navigation} />;
 };
