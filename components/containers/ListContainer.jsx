@@ -39,7 +39,9 @@ export const ListContainer = ({
           placeholder="Choose Category"
           _selectedItem={{
             bg: 'teal.800',
-            color: 'white',
+            _text: {
+              color: 'white',
+            },
             endIcon: <CheckIcon size="5" color="white" />,
           }}
           onValueChange={(itemValue) =>
